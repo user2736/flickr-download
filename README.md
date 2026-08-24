@@ -1,60 +1,60 @@
-# Flickr 照片元数据采集器
+# Flickr Photo Metadata Collector
 
-这是一个基于 Flickr API 的 Python 脚本：按关键词搜索照片，获取照片原图尺寸、拍摄日期、作者信息、照片地理位置和作者资料中的位置，并将结果保存到 SQLite 数据库。
+A Python script based on the Flickr API. It searches for photos by keyword, retrieves image size, capture date, owner information, photo geolocation, and publicly available user location data, then stores the results in a SQLite database.
 
-## 功能
+## Features
 
-- 按关键词搜索 Flickr 照片
-- 支持拍摄日期范围、每页数量和安全搜索
-- 获取照片地理标签及作者公开资料中的位置/国家
-- 获取可用的最大尺寸图片 URL
-- 使用 SQLite 保存结果，照片 ID 重复时自动更新
-- 遇到 Flickr API 错误时自动重试
+- Search Flickr photos by keyword
+- Filter by capture date range, page size, and safe search
+- Retrieve photo geotags and public user location/country data
+- Retrieve the largest available image URL
+- Store results in SQLite and update duplicate photo IDs automatically
+- Retry automatically when Flickr API errors occur
 
-## 环境要求
+## Requirements
 
 - Python 3.9+
-- Flickr API Key 和 Secret
+- A Flickr API key and secret
 
-安装依赖：
+Install the dependency:
 
 ```bash
 pip install flickrapi
 ```
 
-## 配置
+## Configuration
 
-不要把 Flickr 凭据直接写进代码或提交到 GitHub。运行前设置环境变量：
+Do not hard-code Flickr credentials in the source code or commit them to GitHub. Set the following environment variables before running the script.
 
-macOS / Linux：
+macOS / Linux:
 
 ```bash
-export FLICKR_API_KEY="你的_api_key"
-export FLICKR_API_SECRET="你的_api_secret"
+export FLICKR_API_KEY="your_api_key"
+export FLICKR_API_SECRET="your_api_secret"
 ```
 
-Windows PowerShell：
+Windows PowerShell:
 
 ```powershell
-$env:FLICKR_API_KEY = "你的_api_key"
-$env:FLICKR_API_SECRET = "你的_api_secret"
+$env:FLICKR_API_KEY = "your_api_key"
+$env:FLICKR_API_SECRET = "your_api_secret"
 ```
 
-可选地通过 `FLICKR_DB_FILE` 指定数据库文件名；默认保存为 `flickr_yunnan3.db`。
+You can optionally set `FLICKR_DB_FILE` to choose the database filename. The default is `flickr_yunnan3.db`.
 
-## 使用方式
+## Usage
 
-修改 `flickr_download.py` 顶部的 `KEYWORDS`、`MIN_DATE` 和 `MAX_DATE`，然后运行：
+Edit `KEYWORDS`, `MIN_DATE`, and `MAX_DATE` near the top of `flickr_download.py`, then run:
 
 ```bash
 python flickr_download.py
 ```
 
-脚本会在当前目录创建 SQLite 数据库。核心数据表为 `photos`，包含照片 ID、标题、图片 URL、拍摄日期、作者、经纬度、照片地点、作者地点和搜索关键词等字段。
+The script creates a SQLite database in the current directory. The main table is `photos`, with fields including photo ID, title, image URL, capture date, owner, coordinates, photo location, user location, and search keyword.
 
-## 注意事项
+## Notes
 
-- 请遵守 Flickr API 的使用条款、速率限制和照片版权要求。
-- 脚本保存的是 Flickr 返回的图片 URL 和元数据，不会自动下载图片文件。
-- 照片和用户地点信息是否存在，取决于 Flickr 用户公开填写的资料。
-- 大规模检索会产生较多 API 请求，运行时间可能较长。
+- Follow Flickr's API terms of service, rate limits, and photo copyright requirements.
+- The script stores image URLs and metadata returned by Flickr; it does not download image files automatically.
+- The availability of photo and user location data depends on what Flickr users have made public.
+- Large searches may generate many API requests and take a significant amount of time.
